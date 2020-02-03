@@ -1,0 +1,20 @@
+{
+  "ligo-ide-babylonnet": {
+    "funderPKH": "tz2UBGrEBKzzW6hjXjxxiQFJNg6WR2bm6GEN",
+    "remoteSignerUrl": "http://localhost:6732",
+    "rpcUrl": "https://api.tez.ie/rpc/babylonnet",
+    "redisListName": "ligo-ide:babylonnet:address-pool"
+  },
+  "taquito-example-babylonnet": {
+    "funderPKH": "tz2UBGrEBKzzW6hjXjxxiQFJNg6WR2bm6GEN",
+    "remoteSignerUrl": "http://localhost:6732",
+    "rpcUrl": "https://api.tez.ie/rpc/babylonnet",
+    "redisListName": "taquito-example:babylonnet:address-pool"
+  },
+  "ephemeral-keys-babylonnet": {
+    "funderPKH": "tz2UBGrEBKzzW6hjXjxxiQFJNg6WR2bm6GEN",
+    "remoteSignerUrl": "http://localhost:6732",
+    "rpcUrl": "https://api.tez.ie/rpc/babylonnet",
+    "redisListName": "ephemeral-keys:babylonnet:address-pool"
+  }
+}

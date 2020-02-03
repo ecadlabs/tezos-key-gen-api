@@ -1,0 +1,7 @@
+{
+  "ephemeral-keys-babylonnet": {
+    "maxAmount": 1,
+    "expire": 3600,
+    "pool-id": "ephemeral-keys-babylonnet"
+  }
+}

@@ -37,6 +37,10 @@ export class AddressPool {
     this.queue = new RedisQueue(client, config.redisListName);
   }
 
+  public getRPC() {
+    return this.config.rpcUrl;
+  }
+
   public init() {
     if (this.config.autoRefillDurationMS) {
       setInterval(async () => {

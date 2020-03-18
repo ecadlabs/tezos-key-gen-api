@@ -46,21 +46,12 @@ export class Pools {
     pubSub.on("message", async (_channel, message) => {
       const match = /^(.+):(.+):expire$/.exec(message);
       if (Array.isArray(match) && match.length === 3) {
-        client.get(`${match[1]}:${match[2]}:secret`, (err, key) => {
-          if (err) {
-            logger.error(err)
-            return
-          }
-
-          if (key) {
-            setTimeout(async () => {
-              logger.info(`Recycling key ${key}`)
-              try {
-                await pools.getPoolByID(match[1]).queue.push(key);
-              } catch (ex) {
-                logger.error(`Unable to recycle key: ${ex.message}`, { key })
-              }
-            })
+        setTimeout(async () => {
+          try {
+            const pool = this.ephemeralPools.get(match[1]);
+            await pool.recycle(match[2])
+          } catch (ex) {
+            logger.error(`Unable to recycle key, it will be discarded: ${ex.message}`, { ephemeralPool: match[1], key: match[2] })
           }
         })
       }

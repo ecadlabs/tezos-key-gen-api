@@ -11,9 +11,6 @@ import { TezosToolkit } from '@taquito/taquito'
 import { isAuthorized } from './is-authorized'
 import { logger } from '../logger'
 
-const Tezos = new TezosToolkit();
-Tezos.setProvider({ rpc: 'https://api.tez.ie/rpc/babylonnet' })
-
 export const pk = async (req: Request, res: Response) => {
   if (!isAuthorized(req)) {
     res.status(401).send()
@@ -50,6 +47,9 @@ export const sign = async (req: Request, res: Response) => {
     res.status(404).send();
     return
   }
+
+  const Tezos = new TezosToolkit();
+  Tezos.setRpcProvider(ephemeralPool.getRPC());
 
   // Check if key exists (or is not expired)
 

@@ -1,6 +1,7 @@
 import { RedisClient } from "redis";
 import { AddressPool } from "../address-pool";
 import { InMemorySigner } from "@taquito/signer";
+import { logger } from "../logger";
 const uuidv4 = require('uuid/v4');
 
 export interface EphemeralKeyConfig {
@@ -17,6 +18,20 @@ export class EphemeralKeyStore {
   ) {
     if (!pool) {
       throw new Error('Address pool is mandatory')
+    }
+  }
+
+  public getRPC() {
+    return this.pool.getRPC();
+  }
+
+  async recycle(id: string) {
+    const { secret, amount } = await this.get(id);
+    if (BigInt(amount) < BigInt(this.config.maxAmount)) {
+      logger.info('Discarding key', { key: secret, id, amount })
+    } else {
+      logger.info('Recycling key', { key: secret, id, amount })
+      await this.pool.queue.push(secret);
     }
   }
 

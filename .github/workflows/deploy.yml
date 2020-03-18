@@ -1,5 +1,6 @@
 name: Publish Docker
-create:
+on:
+  create:
     tags:
       - v*
 jobs:

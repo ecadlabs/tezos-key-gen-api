@@ -9,6 +9,7 @@ import { OperationContentsAndResultOrigination, OperationContentsAndResultTransa
 import { pools } from '../pools'
 import { TezosToolkit } from '@taquito/taquito'
 import { isAuthorized } from './is-authorized'
+import { logger } from '../logger'
 
 const Tezos = new TezosToolkit();
 Tezos.setProvider({ rpc: 'https://api.tez.ie/rpc/babylonnet' })
@@ -120,6 +121,7 @@ export const sign = async (req: Request, res: Response) => {
     const { prefixSig } = await signer.sign(bytes)
     res.status(200).send({ signature: prefixSig });
   } catch (ex) {
+    logger.error(ex.message);
     if (ex instanceof HttpResponseError) {
       res.status(ex.status).send(ex.body);
       return

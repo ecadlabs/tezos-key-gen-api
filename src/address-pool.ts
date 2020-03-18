@@ -25,12 +25,14 @@ export interface PoolConfig {
 export class AddressPool {
 
   queue: RedisQueue;
+  private logger;
 
   constructor(
     public readonly id: string,
     private config: PoolConfig,
     client: RedisClient
   ) {
+    this.logger = logger.child({ pool: id })
     this.queue = new RedisQueue(client, config.redisListName);
   }
 
@@ -48,9 +50,8 @@ export class AddressPool {
   async pop() {
     const result = await this.queue.pop();
 
-    setTimeout(() => {
-      // tslint:disable-next-line: no-floating-promises
-      this.generateKeys()
+    setTimeout(async () => {
+      await this.generateKeys()
     })
 
     if (result) {
@@ -70,7 +71,7 @@ export class AddressPool {
       const { level } = await Tezos.rpc.getBlockHeader()
 
       if (await this.queue.size() < this.config.targetBuffer && (!keyValue.has(this.config.lastJobKey) || keyValue.get(this.config.lastJobKey) < level)) {
-        logger.info('Generating new keys...')
+        this.logger.info('Generating new keys...', { level })
         keyValue.put(this.config.lastJobKey, level);
         const dests: { key: string, pkh: string }[] = [];
 
@@ -96,10 +97,10 @@ export class AddressPool {
         }
 
         getKeyProducedCounter(this.id).inc(this.config.batchSize)
-        logger.info('New batch generated')
+        this.logger.info('New batch generated', { keys: dests, opHash: op.hash })
       }
     } catch (ex) {
-      logger.error(ex.message);
+      this.logger.error(ex.message);
     }
   }
 }

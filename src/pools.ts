@@ -52,9 +52,14 @@ export class Pools {
           }
 
           if (key) {
-            logger.info(`Recycling key ${key}`)
-            // tslint:disable-next-line: no-floating-promises
-            pools.getPoolByID(match[1])!.queue.push(key);
+            setTimeout(async () => {
+              logger.info(`Recycling key ${key}`)
+              try {
+                await pools.getPoolByID(match[1]).queue.push(key);
+              } catch (ex) {
+                logger.error(`Unable to recycle key: ${ex.message}`, { key })
+              }
+            })
           }
         })
       }

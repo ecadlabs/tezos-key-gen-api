@@ -55,7 +55,6 @@ const ready = async () => {
   })
 }
 
-// tslint:disable-next-line: no-floating-promises
 ready().then(() => {
   pools.init(client)
   pools.initEphemeral(client, pubSub);
@@ -67,4 +66,4 @@ ready().then(() => {
   metrics.listen(3001, function () {
     logger.info('Metrics listening on port 3001!')
   });
-})
+}).catch(logger.error)

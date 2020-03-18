@@ -20,6 +20,7 @@ export interface PoolConfig {
   lastJobKey: string;
   funderPKH: string;
   remoteSignerUrl: string;
+  autoRefillDurationMS: number;
 }
 
 export class AddressPool {
@@ -34,6 +35,14 @@ export class AddressPool {
   ) {
     this.logger = logger.child({ pool: id })
     this.queue = new RedisQueue(client, config.redisListName);
+  }
+
+  public init() {
+    if (this.config.autoRefillDurationMS) {
+      setInterval(async () => {
+        await this.generateKeys()
+      }, this.config.autoRefillDurationMS)
+    }
   }
 
   public async taquito() {

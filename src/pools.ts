@@ -1,10 +1,10 @@
-import { AddressPool } from "./src/address-pool";
+import { AddressPool } from "./address-pool";
 import { RedisClient } from "redis";
 import { readFileSync } from 'fs';
 import { config } from "./config";
-import { getKeyPoolSizeGauge } from "./src/metrics/key_pool_size.gauge";
-import { getFundingAccountGauge } from "./src/metrics/funding_account_balance.gauge";
-import { EphemeralKeyStore } from "./src/ephemeral/ephemeral-keys";
+import { getKeyPoolSizeGauge } from "./metrics/key_pool_size.gauge";
+import { getFundingAccountGauge } from "./metrics/funding_account_balance.gauge";
+import { EphemeralKeyStore } from "./ephemeral/ephemeral-keys";
 import { logger } from "./logger";
 
 const METRIC_COLLECTION_INTERVAL = 10000;

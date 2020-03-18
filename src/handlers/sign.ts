@@ -5,7 +5,7 @@ import { OperationContentsAndResultReveal } from '@taquito/rpc'
 import { InMemorySigner } from '@taquito/signer'
 import { hex2buf } from '@taquito/utils'
 import { Request, Response } from 'express'
-import { OperationContentsAndResultOrigination, OperationContentsAndResultTransaction, OperationObject } from '../../packages/taquito-rpc/dist/types/types'
+import { OperationContentsAndResultOrigination, OperationContentsAndResultTransaction, OperationObject } from '@taquito/rpc'
 import { pools } from '../pools'
 import { TezosToolkit } from '@taquito/taquito'
 import { isAuthorized } from './is-authorized'
@@ -79,16 +79,17 @@ export const sign = async (req: Request, res: Response) => {
   const chainID = await Tezos.rpc.getChainId();
   try {
     const simulation = await Tezos.rpc.runOperation({
-      chain_id: chainID, operation: {
+      chain_id: chainID,
+      operation: {
         ...managerOp,
         signature: 'edsigtkpiSSschcaCt9pUVrpNPf7TTcgvgDEDD6NCEHMy8NNQJCGnMfLZzYoQj74yLjo9wx6MPVV29CvVzgi7qEcEUok3k7AuMg'
-      }
+      } as any
     })
 
     const allowedOperation: (OperationContentsAndResultOrigination | OperationContentsAndResultReveal | OperationContentsAndResultTransaction)[] = [];
     for (const content of simulation.contents) {
       if (content.kind === 'transaction' || content.kind === 'origination' || content.kind === 'reveal') {
-        allowedOperation.push(content);
+        allowedOperation.push(content as any);
       } else {
         res.status(403).send('Kind not allowed with ephemeral keys');
         return;

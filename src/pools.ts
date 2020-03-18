@@ -24,14 +24,15 @@ export class Pools {
   init(redis: RedisClient) {
     const content = JSON.parse(readFileSync("pools-config.json").toString('utf8'))
     Object.keys(content).forEach((poolKey) => {
-      this.pools.set(poolKey, new AddressPool(poolKey, {
+      const pool = new AddressPool(poolKey, {
         ...config,
         // TODO validate schema
         ...content[poolKey]
       },
         redis
       )
-      )
+      pool.init();
+      this.pools.set(poolKey, pool)
 
       setInterval(async () => {
         getKeyPoolSizeGauge(poolKey).set(await this.pools.get(poolKey)!.size())

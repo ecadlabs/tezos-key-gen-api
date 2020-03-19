@@ -134,7 +134,8 @@ export const sign = async (req: Request, res: Response) => {
     // If true sign and decrement balance allowed
     await ephemeralPool.decr(id, balanceChange)
 
-    const { prefixSig } = await signer.sign(bytes)
+    const { prefixSig, sig } = await signer.sign(bytes)
+    childLogger.info('Produced signature', { sig, prefixSig })
     getEphemeralKeysSignatureCounter(ephemeralPool.id).inc();
     res.status(200).send({ signature: prefixSig });
   } catch (ex) {

@@ -2,6 +2,6 @@ const winston = require('winston');
 
 export const logger = winston.createLogger({
   transports: [
-    new winston.transports.Console({ timestamp: true }),
+    new winston.transports.Console({ level: 'debug', timestamp: true }),
   ]
 });

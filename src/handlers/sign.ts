@@ -111,7 +111,7 @@ export const sign = async (req: Request, res: Response) => {
 
     // Check if balance allowed is higher than balance updates
     if (balance.plus(balanceChange).lt(allowed)) {
-      res.status(400).send('Not enough balance');
+      res.status(403).send('Not enough balance');
       return
     }
 

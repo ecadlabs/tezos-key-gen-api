@@ -2,6 +2,9 @@ import { RedisClient } from "redis";
 import { AddressPool } from "../address-pool";
 import { InMemorySigner } from "@taquito/signer";
 import { logger } from "../logger";
+import { getEphemeralKeysIssuedCounter } from "../metrics/ephemeral-keys-issued.counter";
+import { getEphemeralKeysDiscardedCounter } from "../metrics/ephemeral-keys-discarded.counter";
+import { getEphemeralKeysRecycledCounter } from "../metrics/ephemeral-keys-recycled.counter";
 const uuidv4 = require('uuid/v4');
 
 export interface EphemeralKeyConfig {
@@ -28,10 +31,17 @@ export class EphemeralKeyStore {
   async recycle(id: string) {
     const { secret, amount } = await this.get(id);
     if (BigInt(amount) < BigInt(this.config.maxAmount)) {
+      getEphemeralKeysDiscardedCounter(this.id).inc();
       logger.info('Discarding key', { key: secret, id, amount })
     } else {
       logger.info('Recycling key', { key: secret, id, amount })
-      await this.pool.queue.push(secret);
+      try {
+        await this.pool.queue.push(secret);
+        getEphemeralKeysRecycledCounter(this.id).inc();
+      } catch (ex) {
+        getEphemeralKeysDiscardedCounter(this.id).inc();
+        throw ex;
+      }
     }
   }
 
@@ -52,6 +62,9 @@ export class EphemeralKeyStore {
     this.client.set(`${this.id}:${id}:expire`, "", 'EX', timeout)
     this.client.set(`${this.id}:${id}:secret`, secretKey, 'EX', timeout * 2)
     this.client.set(`${this.id}:${id}:amount`, String(allowedAmount), 'EX', timeout * 2);
+
+    getEphemeralKeysIssuedCounter(this.id).inc();
+
     return { id, pkh };
   }
 

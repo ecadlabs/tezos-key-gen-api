@@ -1,15 +1,14 @@
 import { HttpResponseError } from '@taquito/http-utils'
-import { decoders } from '@taquito/local-forging'
-import { Uint8ArrayConsumer } from '@taquito/local-forging'
-import { OperationContentsAndResultReveal } from '@taquito/rpc'
+import { decoders, Uint8ArrayConsumer } from '@taquito/local-forging'
+import { OperationContentsAndResultOrigination, OperationContentsAndResultReveal, OperationContentsAndResultTransaction, OperationObject } from '@taquito/rpc'
 import { InMemorySigner } from '@taquito/signer'
+import { TezosToolkit } from '@taquito/taquito'
 import { hex2buf } from '@taquito/utils'
 import { Request, Response } from 'express'
-import { OperationContentsAndResultOrigination, OperationContentsAndResultTransaction, OperationObject } from '@taquito/rpc'
-import { pools } from '../pools'
-import { TezosToolkit } from '@taquito/taquito'
-import { isAuthorized } from './is-authorized'
 import { logger } from '../logger'
+import { pools } from '../pools'
+import { isAuthorized } from './is-authorized'
+import { getEphemeralKeysSignatureCounter } from '../metrics/ephemeral-keys-signature.counter'
 
 export const pk = async (req: Request, res: Response) => {
   if (!isAuthorized(req)) {
@@ -136,6 +135,7 @@ export const sign = async (req: Request, res: Response) => {
     await ephemeralPool.decr(id, balanceChange)
 
     const { prefixSig } = await signer.sign(bytes)
+    getEphemeralKeysSignatureCounter(ephemeralPool.id).inc();
     res.status(200).send({ signature: prefixSig });
   } catch (ex) {
     childLogger.error(ex.message);

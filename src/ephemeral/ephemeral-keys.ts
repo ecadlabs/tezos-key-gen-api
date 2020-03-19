@@ -9,7 +9,7 @@ const uuidv4 = require('uuid/v4');
 
 export interface EphemeralKeyConfig {
   expire: number,
-  maxAmount: number,
+  maxAmount: number, // In Tez
 }
 
 export class EphemeralKeyStore {
@@ -30,7 +30,7 @@ export class EphemeralKeyStore {
 
   async recycle(id: string) {
     const { secret, amount } = await this.get(id);
-    if (BigInt(amount) < BigInt(this.config.maxAmount)) {
+    if (BigInt(amount) < (BigInt(this.config.maxAmount) * BigInt(1000000))) {
       getEphemeralKeysDiscardedCounter(this.id).inc();
       logger.info('Discarding key', { key: secret, id, amount })
     } else {

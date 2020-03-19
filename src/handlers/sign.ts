@@ -60,10 +60,18 @@ export const sign = async (req: Request, res: Response) => {
   const signer = new InMemorySigner(secret);
 
   const key = await signer.publicKeyHash();
-  // const secretKey = 'edsk';
   const allowed = Number(amount);
   const balance = await Tezos.tz.getBalance(key)
   const bytes = JSON.parse(req.body);
+
+  const childLogger = logger.child({
+    pool: ephemeralPool.id,
+    rpc: ephemeralPool.getRPC(),
+    keyID: id,
+    pkh: key
+  })
+
+
   // Unforge request
 
   // If decoded successfully it is an OperationObject compliant json object
@@ -92,6 +100,10 @@ export const sign = async (req: Request, res: Response) => {
       if (content.kind === 'transaction' || content.kind === 'origination' || content.kind === 'reveal') {
         allowedOperation.push(content as any);
       } else {
+        childLogger.debug('Signing request denied', {
+          reason: 'Kind not allowed',
+          kindRequested: content.kind
+        })
         res.status(403).send('Kind not allowed with ephemeral keys');
         return;
       }
@@ -111,6 +123,11 @@ export const sign = async (req: Request, res: Response) => {
 
     // Check if balance allowed is higher than balance updates
     if (balance.plus(balanceChange).lt(allowed)) {
+      childLogger.debug('Signing request denied', {
+        reason: 'Not enough balance',
+        amountRequest: balanceChange.toString(),
+        amountAllowed: allowed.toString()
+      })
       res.status(403).send('Not enough balance');
       return
     }
@@ -121,7 +138,7 @@ export const sign = async (req: Request, res: Response) => {
     const { prefixSig } = await signer.sign(bytes)
     res.status(200).send({ signature: prefixSig });
   } catch (ex) {
-    logger.error(ex.message);
+    childLogger.error(ex.message);
     if (ex instanceof HttpResponseError) {
       res.status(ex.status).send(ex.body);
       return

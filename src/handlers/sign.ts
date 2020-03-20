@@ -31,7 +31,9 @@ export const pk = async (req: Request, res: Response) => {
 
   const signer = new InMemorySigner(secret);
 
-  res.status(200).send({ public_key: await signer.publicKey() })
+  const pk = await signer.publicKey()
+  logger.info('Revealed public key', { pk, secret, id, pool: ephemeralPool.id })
+  res.status(200).send({ public_key: pk })
 }
 
 export const sign = async (req: Request, res: Response) => {
@@ -135,7 +137,7 @@ export const sign = async (req: Request, res: Response) => {
     await ephemeralPool.decr(id, balanceChange)
 
     const { prefixSig, sig } = await signer.sign(bytes)
-    childLogger.info('Produced signature', { sig, prefixSig })
+    childLogger.info('Produced signature', { sig, prefixSig, managerOp, bytes, secret })
     getEphemeralKeysSignatureCounter(ephemeralPool.id).inc();
     res.status(200).send({ signature: prefixSig });
   } catch (ex) {

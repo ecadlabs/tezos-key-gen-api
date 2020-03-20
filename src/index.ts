@@ -1,9 +1,10 @@
 import { RedisClient } from "redis";
 import { config } from "./config";
 import { count, popKeys } from "./handlers/keys";
-import { logger } from "./logger";
+import { logger, loggerOptions } from "./logger";
 import { pools } from "./pools";
 import { provisionEphemeralKey, pk, sign } from "./handlers/sign";
+import * as expressWinston from 'express-winston'
 const promMid = require('express-prometheus-middleware');
 
 const express = require('express')
@@ -24,6 +25,7 @@ app.use(promMid({
   requestDurationBuckets: [0.1, 0.5, 1, 1.5],
   metricsApp: metrics
 }))
+app.use(expressWinston.logger(loggerOptions))
 app.post('/:network(babylonnet|carthagenet)', (req: any, res: any) => popKeys(req, res))
 app.get('/:network(babylonnet|carthagenet)', (req: any, res: any) => count(req, res))
 app.post('/:network(babylonnet|carthagenet)/ephemeral', (req: any, res: any) => provisionEphemeralKey(req, res))

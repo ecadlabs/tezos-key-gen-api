@@ -10,26 +10,26 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@taquito/local-forging": "^6.1.1-beta.0",
-    "@taquito/remote-signer": "^6.1.1-beta.0",
-    "@taquito/rpc": "^6.1.0-beta.0",
-    "@taquito/signer": "^6.1.1-beta.0",
-    "@taquito/taquito": "^6.1.1-beta.0",
-    "@taquito/utils": "^6.1.1-beta.0",
-    "@types/redis": "^2.8.14",
+    "@taquito/local-forging": "^6.2.0-beta.0",
+    "@taquito/remote-signer": "^6.2.0-beta.0",
+    "@taquito/rpc": "^6.2.0-beta.0",
+    "@taquito/signer": "^6.2.0-beta.0",
+    "@taquito/taquito": "^6.2.0-beta.0",
+    "@taquito/utils": "^6.2.0-beta.0",
+    "@types/redis": "^2.8.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "express-prometheus-middleware": "^0.8.5",
     "prom-client": "^11.5.3",
     "redis": "^2.8.0",
-    "uuid": "^3.4.0",
+    "uuid": "^7.0.3",
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "@types/express": "^4.17.2",
-    "ts-node": "^8.6.2",
-    "typescript": "~3.6.0",
-    "webpack": "^4.41.4",
-    "webpack-cli": "^3.3.10"
+    "@types/express": "^4.17.6",
+    "ts-node": "^8.8.2",
+    "typescript": "~3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   }
 }

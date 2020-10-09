@@ -2,7 +2,8 @@ import { RedisClient } from "redis";
 import { AddressPool } from "../address-pool";
 import { InMemorySigner } from "@taquito/signer";
 import { logger } from "../logger";
-const uuidv4 = require('uuid/v4');
+import { v4 as uuidv4 } from 'uuid';
+
 
 export interface EphemeralKeyConfig {
   expire: number,

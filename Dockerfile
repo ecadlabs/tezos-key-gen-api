@@ -3,7 +3,7 @@ FROM node:latest
 ADD package.json package.json
 ADD package-lock.json package-lock.json
 
-RUN npm install
+RUN npm ci
 
 ADD tsconfig.json tsconfig.json
 COPY src src

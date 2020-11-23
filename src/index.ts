@@ -24,11 +24,11 @@ app.use(promMid({
   requestDurationBuckets: [0.1, 0.5, 1, 1.5],
   metricsApp: metrics
 }))
-app.post('/:network(delphinet|carthagenet)', (req: any, res: any) => popKeys(req, res))
-app.get('/:network(delphinet|carthagenet)', (req: any, res: any) => count(req, res))
-app.post('/:network(delphinet|carthagenet)/ephemeral', (req: any, res: any) => provisionEphemeralKey(req, res))
-app.get('/:network(delphinet|carthagenet)/ephemeral/:id/keys/:key', (req: any, res: any) => pk(req, res))
-app.post('/:network(delphinet|carthagenet)/ephemeral/:id/keys/:key', (req: any, res: any) => sign(req, res))
+app.post('/:network(ebetanet|delphinet|carthagenet)', (req: any, res: any) => popKeys(req, res))
+app.get('/:network(ebetanet|delphinet|carthagenet)', (req: any, res: any) => count(req, res))
+app.post('/:network(ebetanet|delphinet|carthagenet)/ephemeral', (req: any, res: any) => provisionEphemeralKey(req, res))
+app.get('/:network(ebetanet|delphinet|carthagenet)/ephemeral/:id/keys/:key', (req: any, res: any) => pk(req, res))
+app.post('/:network(ebetanet|delphinet|carthagenet)/ephemeral/:id/keys/:key', (req: any, res: any) => sign(req, res))
 
 export const client: RedisClient = redis.createClient({
   host: config.redisHost,

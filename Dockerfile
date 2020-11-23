@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:lts-alpine
 
 ADD package.json package.json
 ADD package-lock.json package-lock.json

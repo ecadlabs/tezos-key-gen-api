@@ -50,8 +50,8 @@ export class AddressPool {
   }
 
   public async taquito() {
-    const tezos = new TezosToolkit()
-    tezos.setProvider({ rpc: this.config.rpcUrl, signer: new RemoteSigner(this.config.funderPKH, this.config.remoteSignerUrl) })
+    const tezos = new TezosToolkit(this.config.rpcUrl)
+    tezos.setProvider({ signer: new RemoteSigner(this.config.funderPKH, this.config.remoteSignerUrl) })
     return tezos;
   }
 

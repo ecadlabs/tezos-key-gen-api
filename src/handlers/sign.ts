@@ -48,8 +48,7 @@ export const sign = async (req: Request, res: Response) => {
     return
   }
 
-  const Tezos = new TezosToolkit();
-  Tezos.setRpcProvider(ephemeralPool.getRPC());
+  const Tezos = new TezosToolkit(ephemeralPool.getRPC());
 
   // Check if key exists (or is not expired)
 

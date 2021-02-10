@@ -43,7 +43,7 @@ export const pubSub: RedisClient = redis.createClient({
 });
 
 const ready = async () => {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     client.on('ready', (err: any) => {
       if (err) {
         reject(err)

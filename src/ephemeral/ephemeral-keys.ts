@@ -69,7 +69,7 @@ export class EphemeralKeyStore {
   }
 
   decr(id: string, amount: number) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.client.decrby(`${this.id}:${id}:amount`, amount, (err) => {
         if (err) {
           reject(err)

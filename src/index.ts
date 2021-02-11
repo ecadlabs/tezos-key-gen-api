@@ -24,11 +24,11 @@ app.use(promMid({
   requestDurationBuckets: [0.1, 0.5, 1, 1.5],
   metricsApp: metrics
 }))
-app.post('/:network(ebetanet|delphinet|carthagenet)', (req: any, res: any) => popKeys(req, res))
-app.get('/:network(ebetanet|delphinet|carthagenet)', (req: any, res: any) => count(req, res))
-app.post('/:network(ebetanet|delphinet|carthagenet)/ephemeral', (req: any, res: any) => provisionEphemeralKey(req, res))
-app.get('/:network(ebetanet|delphinet|carthagenet)/ephemeral/:id/keys/:key', (req: any, res: any) => pk(req, res))
-app.post('/:network(ebetanet|delphinet|carthagenet)/ephemeral/:id/keys/:key', (req: any, res: any) => sign(req, res))
+app.post('/:network(edonet|delphinet|carthagenet)', (req: any, res: any) => popKeys(req, res))
+app.get('/:network(edonet|delphinet|carthagenet)', (req: any, res: any) => count(req, res))
+app.post('/:network(edonet|delphinet|carthagenet)/ephemeral', (req: any, res: any) => provisionEphemeralKey(req, res))
+app.get('/:network(edonet|delphinet|carthagenet)/ephemeral/:id/keys/:key', (req: any, res: any) => pk(req, res))
+app.post('/:network(edonet|delphinet|carthagenet)/ephemeral/:id/keys/:key', (req: any, res: any) => sign(req, res))
 
 export const client: RedisClient = redis.createClient({
   host: config.redisHost,
@@ -43,7 +43,7 @@ export const pubSub: RedisClient = redis.createClient({
 });
 
 const ready = async () => {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     client.on('ready', (err: any) => {
       if (err) {
         reject(err)

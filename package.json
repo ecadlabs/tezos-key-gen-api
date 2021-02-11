@@ -10,12 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@taquito/local-forging": "^7.0.1-beta.0",
-    "@taquito/remote-signer": "^7.0.1-beta.0",
-    "@taquito/rpc": "^7.0.1-beta.0",
-    "@taquito/signer": "^7.0.1-beta.0",
-    "@taquito/taquito": "^7.0.1-beta.0",
-    "@taquito/utils": "^7.0.1-beta.0",
+    "@taquito/local-forging": "^8.0.1-RC.2",
+    "@taquito/remote-signer": "^8.0.1-RC.2",
+    "@taquito/rpc": "^8.0.1-RC.2",
+    "@taquito/signer": "^8.0.1-RC.2",
+    "@taquito/taquito": "^8.0.1-RC.2",
+    "@taquito/utils": "^8.0.1-RC.2",
     "@types/redis": "^2.8.27",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@types/express": "^4.17.8",
     "ts-node": "^9.0.0",
-    "typescript": "~4.0.3",
+    "typescript": "~4.1.5",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   }

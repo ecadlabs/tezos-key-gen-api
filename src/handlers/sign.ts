@@ -80,6 +80,7 @@ export const sign = async (req: Request, res: Response) => {
     consumer.consume(1)
     managerOp = decoders['manager'](consumer as any) as OperationObject
   } catch (ex) {
+    childLogger.debug('Unforge request failed', {request: req.body})
     res.status(400).send();
     return
   }
@@ -137,6 +138,7 @@ export const sign = async (req: Request, res: Response) => {
     const { prefixSig } = await signer.sign(bytes)
     res.status(200).send({ signature: prefixSig });
   } catch (ex) {
+    childLogger.debug(ex.message, { operation: managerOp });
     childLogger.error(ex.message);
     if (ex instanceof HttpResponseError) {
       res.status(ex.status).send(ex.body);

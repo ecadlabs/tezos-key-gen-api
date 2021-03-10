@@ -51,11 +51,11 @@ app.use(promMid({
   requestDurationBuckets: [0.1, 0.5, 1, 1.5],
   metricsApp: metrics
 }))
-app.post('/:network(edonet|delphinet|falphanet)', middlewareLogger((req: any, res: any) => popKeys(req, res)))
-app.get('/:network(edonet|delphinet|falphanet)', middlewareLogger((req: any, res: any) => count(req, res)))
-app.post('/:network(edonet|delphinet|falphanet)/ephemeral', middlewareLogger((req: any, res: any) => provisionEphemeralKey(req, res)))
-app.get('/:network(edonet|delphinet|falphanet)/ephemeral/:id/keys/:key', middlewareLogger((req: any, res: any) => pk(req, res)))
-app.post('/:network(edonet|delphinet|falphanet)/ephemeral/:id/keys/:key', middlewareLogger((req: any, res: any) => sign(req, res))) 
+app.post('/:network(edonet|delphinet|falphanet|florencenet)', middlewareLogger((req: any, res: any) => popKeys(req, res)))
+app.get('/:network(edonet|delphinet|falphanet|florencenet)', middlewareLogger((req: any, res: any) => count(req, res)))
+app.post('/:network(edonet|delphinet|falphanet|florencenet)/ephemeral', middlewareLogger((req: any, res: any) => provisionEphemeralKey(req, res)))
+app.get('/:network(edonet|delphinet|falphanet|florencenet)/ephemeral/:id/keys/:key', middlewareLogger((req: any, res: any) => pk(req, res)))
+app.post('/:network(edonet|delphinet|falphanet|florencenet)/ephemeral/:id/keys/:key', middlewareLogger((req: any, res: any) => sign(req, res))) 
 
 export const client: RedisClient = redis.createClient({
   host: config.redisHost,

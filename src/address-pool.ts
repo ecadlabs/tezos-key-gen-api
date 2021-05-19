@@ -92,7 +92,7 @@ export class AddressPool {
           const keyBytes = Buffer.alloc(32);
           crypto.randomFillSync(keyBytes)
 
-          const key = b58cencode(new Uint8Array(keyBytes), prefix[Prefix.P2SK]);
+          const key = b58cencode(new Uint8Array(keyBytes), prefix[Prefix.SPSK]);
           const pkh = await new InMemorySigner(key).publicKeyHash();
           dests.push({ key, pkh });
         }

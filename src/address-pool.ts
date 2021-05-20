@@ -99,7 +99,7 @@ export class AddressPool {
 
         const batch = Tezos.batch()
         dests.forEach(({ pkh }) => {
-          batch.withTransfer({ to: pkh, amount: this.config.tzAmount });
+          batch.withTransfer({ to: pkh, amount: this.config.tzAmount, gasLimit:2000 });
         })
 
         const op = await batch.send();

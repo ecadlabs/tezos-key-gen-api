@@ -51,7 +51,7 @@ app.use(promMid({
   requestDurationBuckets: [0.1, 0.5, 1, 1.5],
   metricsApp: metrics
 }))
-app.post('/:network(edonetgalpha2net|florencenet)', middlewareLogger((req: any, res: any) => popKeys(req, res)))
+app.post('/:network(edonet|galpha2net|florencenet)', middlewareLogger((req: any, res: any) => popKeys(req, res)))
 app.get('/:network(edonet|galpha2net|florencenet)', middlewareLogger((req: any, res: any) => count(req, res)))
 app.post('/:network(edonet|galpha2net|florencenet)/ephemeral', middlewareLogger((req: any, res: any) => provisionEphemeralKey(req, res)))
 app.get('/:network(edonet|galpha2net|florencenet)/ephemeral/:id/keys/:key', middlewareLogger((req: any, res: any) => pk(req, res)))

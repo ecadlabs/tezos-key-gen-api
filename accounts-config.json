@@ -6,9 +6,17 @@
     }
   },
   "taquito-example": {
-    "babylonnet": {
-      "regular": "taquito-example-babylonnet",
-      "ephemeral": "ephemeral-keys-babylonnet"
+    "delphinet": {
+      "regular": "taquito-example-delphinet",
+      "ephemeral": "ephemeral-keys-delphinet"
+    },
+    "edonet": {
+      "regular": "taquito-example-edonet",
+      "ephemeral": "ephemeral-keys-edonet"
+    },
+    "falphanet": {
+      "regular": "taquito-example-falphanet",
+      "ephemeral": "ephemeral-keys-falphanet"
     }
   }
 }

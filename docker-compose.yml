@@ -13,4 +13,5 @@ services:
     ports:
       - 6732:6732
     volumes:
-      - ./signatory.yaml:/app/signatory.yaml
+      - ./signatory.yaml:/etc/signatory.yaml
+      - ./key_gen_funder.key:/etc/key_gen_funder.key

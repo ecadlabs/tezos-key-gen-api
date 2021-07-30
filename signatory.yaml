@@ -1,0 +1,24 @@
+server:
+  # Default port 6732
+  address: :6732
+  # Default port 9583
+  utility_address: :9583
+vaults:
+  local_file_keys:
+    driver: file
+    config:
+      # tz1Rb18fBaZxkzDgFGAbcBZzxLCYdxyLryVX
+      file: /etc/key_gen_funder.key
+# List enabled public keys hashes here
+tezos:
+  tz1Rb18fBaZxkzDgFGAbcBZzxLCYdxyLryVX:
+    allowed_operations:
+      # List of [generic, block, endorsement]
+      - generic
+      - block
+      - endorsement
+    allowed_kinds:
+      # List of [endorsement, ballot, reveal, transaction, origination, delegation, seed_nonce_revelation, activate_account]
+      - transaction
+      - endorsement
+      - reveal

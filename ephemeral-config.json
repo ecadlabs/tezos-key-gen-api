@@ -1,7 +1,17 @@
 {
-  "ephemeral-keys-babylonnet": {
-    "maxAmount": 1,
-    "expire": 3600,
-    "pool-id": "ephemeral-keys-babylonnet"
+  "ephemeral-keys-delphinet": {
+    "maxAmount": 30,
+    "expire": 300,
+    "pool-id": "ephemeral-keys-delphinet"
+  },
+  "ephemeral-keys-edonet": {
+    "maxAmount": 30,
+    "expire": 300,
+    "pool-id": "ephemeral-keys-edonet"
+  },
+  "ephemeral-keys-falphanet": {
+    "maxAmount": 30,
+    "expire": 300,
+    "pool-id": "ephemeral-keys-falphanet"
   }
 }

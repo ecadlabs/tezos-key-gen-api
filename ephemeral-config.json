@@ -1,17 +1,22 @@
 {
-  "ephemeral-keys-delphinet": {
+  "ephemeral-keys-granadanet": {
     "maxAmount": 30,
     "expire": 300,
-    "pool-id": "ephemeral-keys-delphinet"
+    "pool-id": "ephemeral-keys-granadanet"
   },
   "ephemeral-keys-edonet": {
     "maxAmount": 30,
     "expire": 300,
     "pool-id": "ephemeral-keys-edonet"
   },
-  "ephemeral-keys-falphanet": {
+  "ephemeral-keys-florencenet": {
     "maxAmount": 30,
     "expire": 300,
-    "pool-id": "ephemeral-keys-falphanet"
+    "pool-id": "ephemeral-keys-florencenet"
+  },
+  "ephemeral-keys-flextesanet": {
+    "maxAmount": 30,
+    "expire": 300,
+    "pool-id": "ephemeral-keys-flextesanet"
   }
 }

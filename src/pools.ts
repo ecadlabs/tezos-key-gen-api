@@ -22,7 +22,7 @@ export class Pools {
   } = {};
 
   init(redis: RedisClient) {
-    const content = JSON.parse(readFileSync("pools-config.json").toString('utf8'))
+    const content = JSON.parse(readFileSync("pools-config.single.json").toString('utf8'))
     Object.keys(content).forEach((poolKey) => {
       const pool = new AddressPool(poolKey, {
         ...config,
@@ -39,7 +39,7 @@ export class Pools {
         getFundingAccountGauge(poolKey, content[poolKey].funderPKH).set(Number(await this.pools.get(poolKey)!.getFundingBalance()))
       }, METRIC_COLLECTION_INTERVAL)
     })
-    this.accounts = JSON.parse(readFileSync("accounts-config.json").toString('utf8'))
+    this.accounts = JSON.parse(readFileSync("accounts-config.single.json").toString('utf8'))
   }
 
   public initEphemeral(client: RedisClient, pubSub: RedisClient) {
@@ -57,7 +57,7 @@ export class Pools {
       }
     });
     pubSub.subscribe("__keyevent@0__:expired");
-    const content = JSON.parse(readFileSync("ephemeral-config.json").toString('utf8'))
+    const content = JSON.parse(readFileSync("ephemeral-config.single.json").toString('utf8'))
 
     Object.keys(content).forEach((ephemeralPoolKey) => {
       this.ephemeralPools.set(ephemeralPoolKey, new EphemeralKeyStore(ephemeralPoolKey, client, {

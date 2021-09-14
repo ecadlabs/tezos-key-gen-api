@@ -1,0 +1,14 @@
+{
+  "ligo-ide": {
+    "babylonnet": {
+      "regular": "ligo-ide-babylonnet",
+      "ephemeral": "ephemeral-keys-babylonnet"
+    }
+  },
+  "taquito-example": {
+    "flextesanet": {
+      "regular": "taquito-example-flextesanet",
+      "ephemeral": "ephemeral-keys-flextesanet"
+    }
+  }
+}

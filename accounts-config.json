@@ -6,17 +6,21 @@
     }
   },
   "taquito-example": {
-    "delphinet": {
-      "regular": "taquito-example-delphinet",
-      "ephemeral": "ephemeral-keys-delphinet"
+    "granadanet": {
+      "regular": "taquito-example-granadanet",
+      "ephemeral": "ephemeral-keys-granadanet"
     },
     "edonet": {
       "regular": "taquito-example-edonet",
       "ephemeral": "ephemeral-keys-edonet"
     },
-    "falphanet": {
-      "regular": "taquito-example-falphanet",
-      "ephemeral": "ephemeral-keys-falphanet"
+    "florencenet": {
+      "regular": "taquito-example-florencenet",
+      "ephemeral": "ephemeral-keys-florencenet"
+    },
+    "flextesanet": {
+      "regular": "taquito-example-flextesanet",
+      "ephemeral": "ephemeral-keys-flextesanet"
     }
   }
 }

@@ -1,0 +1,19 @@
+{
+  "taquito-example-flextesanet": {
+    "funderPKH": "tz1Rb18fBaZxkzDgFGAbcBZzxLCYdxyLryVX",
+    "remoteSignerUrl": "http://0.0.0.0:6732",
+    "batchSize": 500,
+    "rpcUrl": "http://macmini:8732/",
+    "redisListName": "taquito-example:flextesanet:address-pool"
+  },
+  "ephemeral-keys-flextesanet": {
+    "funderPKH": "tz1Rb18fBaZxkzDgFGAbcBZzxLCYdxyLryVX",
+    "remoteSignerUrl": "http://0.0.0.0:6732",
+    "targetBuffer": 2000,
+    "batchSize": 500,
+    "tzAmount": 20,
+    "autoRefillDurationMS": 30000,
+    "rpcUrl": "http://macmini:8732/",
+    "redisListName": "ephemeral-keys:flextesanet:address-pool"
+  }
+}

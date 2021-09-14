@@ -1,20 +1,20 @@
 {
-  "taquito-example-delphinet": {
+  "taquito-example-granadanet": {
     "funderPKH": "tz1Rb18fBaZxkzDgFGAbcBZzxLCYdxyLryVX",
     "remoteSignerUrl": "http://0.0.0.0:6732",
     "batchSize": 2,
-    "rpcUrl": "https://api.tez.ie/rpc/delphinet",
-    "redisListName": "taquito-example:delphinet:address-pool"
+    "rpcUrl": "https://api.tez.ie/rpc/granadanet",
+    "redisListName": "taquito-example:granadanet:address-pool"
   },
-  "ephemeral-keys-delphinet": {
+  "ephemeral-keys-granadanet": {
     "funderPKH": "tz1Rb18fBaZxkzDgFGAbcBZzxLCYdxyLryVX",
     "remoteSignerUrl": "http://0.0.0.0:6732",
     "targetBuffer": 6,
     "batchSize": 3,
     "tzAmount": 2,
     "autoRefillDurationMS": 30000,
-    "rpcUrl": "https://api.tez.ie/rpc/delphinet",
-    "redisListName": "ephemeral-keys:delphinet:address-pool"
+    "rpcUrl": "https://api.tez.ie/rpc/granadanet",
+    "redisListName": "ephemeral-keys:granadanet:address-pool"
   },
   "taquito-example-edonet": {
     "funderPKH": "tz1Rb18fBaZxkzDgFGAbcBZzxLCYdxyLryVX",
@@ -33,21 +33,38 @@
     "rpcUrl": "https://api.tez.ie/rpc/edonet",
     "redisListName": "ephemeral-keys:edonet:address-pool"
   },
-  "taquito-example-falphanet": {
+  "taquito-example-florencenet": {
     "funderPKH": "tz1Rb18fBaZxkzDgFGAbcBZzxLCYdxyLryVX",
     "remoteSignerUrl": "http://0.0.0.0:6732",
     "batchSize": 2,
-    "rpcUrl": "https://api.tez.ie/rpc/falphanet",
-    "redisListName": "taquito-example:falphanet:address-pool"
+    "rpcUrl": "https://api.tez.ie/rpc/florencenet",
+    "redisListName": "taquito-example:florencenet:address-pool"
   },
-  "ephemeral-keys-falphanet": {
+  "ephemeral-keys-florencenet": {
     "funderPKH": "tz1Rb18fBaZxkzDgFGAbcBZzxLCYdxyLryVX",
     "remoteSignerUrl": "http://0.0.0.0:6732",
     "targetBuffer": 6,
     "batchSize": 3,
     "tzAmount": 2,
     "autoRefillDurationMS": 30000,
-    "rpcUrl": "https://api.tez.ie/rpc/falphanet",
-    "redisListName": "ephemeral-keys:falphanet:address-pool"
+    "rpcUrl": "https://api.tez.ie/rpc/florencenet",
+    "redisListName": "ephemeral-keys:florencenet:address-pool"
+  },
+  "taquito-example-flextesanet": {
+    "funderPKH": "tz1Rb18fBaZxkzDgFGAbcBZzxLCYdxyLryVX",
+    "remoteSignerUrl": "http://0.0.0.0:6732",
+    "batchSize": 2,
+    "rpcUrl": "http://macmini:8732/",
+    "redisListName": "taquito-example:flextesanet:address-pool"
+  },
+  "ephemeral-keys-flextesanet": {
+    "funderPKH": "tz1Rb18fBaZxkzDgFGAbcBZzxLCYdxyLryVX",
+    "remoteSignerUrl": "http://0.0.0.0:6732",
+    "targetBuffer": 6,
+    "batchSize": 3,
+    "tzAmount": 2,
+    "autoRefillDurationMS": 30000,
+    "rpcUrl": "http://macmini:8732/",
+    "redisListName": "ephemeral-keys:flextesanet:address-pool"
   }
 }

@@ -2,6 +2,8 @@ version: '3'
 services:
   redis:
     image: bitnami/redis
+    logging:
+        driver: json-file
     ports:
       - 6379:6379
     environment:
@@ -10,6 +12,8 @@ services:
       - /bitnami/redis/data
   signatory:
     image: ecadlabs/signatory:latest
+    logging:
+        driver: json-file
     ports:
       - 6732:6732
     volumes:

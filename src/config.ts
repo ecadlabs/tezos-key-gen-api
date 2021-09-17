@@ -36,7 +36,7 @@ export class Config {
   lastJobKey = process.env['LAST_JOB_KEY'] || 'last_job_level'
   listName = process.env['SECRET_KEY_LIST_NAME'] || 'secret_keys_list'
   redisPassword = process.env['REDIS_PASSWORD'] || 'password123'
-  redisHost = process.env['REDIS_HOST'] || 'localhost'
+  redisHost = process.env['REDIS_HOST'] || 'keygen_redis_1'
   redisPort = process.env['REDIS_PASSWORD'] || '6379'
   apiKeys = ['ligo-ide', 'taquito-example']
 }

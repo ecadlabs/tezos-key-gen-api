@@ -19,3 +19,7 @@ services:
     volumes:
       - ./signatory.yaml:/etc/signatory.yaml
       - ./key_gen_funder.key:/etc/key_gen_funder.key
+networks:
+  default:
+    external: true
+    name: bridge

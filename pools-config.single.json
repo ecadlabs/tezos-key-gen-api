@@ -3,7 +3,7 @@
     "funderPKH": "tz1Rb18fBaZxkzDgFGAbcBZzxLCYdxyLryVX",
     "remoteSignerUrl": "http://keygen_signatory_1:6732",
     "batchSize": 500,
-    "rpcUrl": "http://macmini:8732/",
+    "rpcUrl": "http://macmini:20000/",
     "redisListName": "taquito-example:flextesanet:address-pool"
   },
   "ephemeral-keys-flextesanet": {
@@ -13,7 +13,7 @@
     "batchSize": 500,
     "tzAmount": 20,
     "autoRefillDurationMS": 30000,
-    "rpcUrl": "http://macmini:8732/",
+    "rpcUrl": "http://macmini:20000/",
     "redisListName": "ephemeral-keys:flextesanet:address-pool"
   }
 }

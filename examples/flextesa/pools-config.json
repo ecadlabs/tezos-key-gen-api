@@ -1,0 +1,19 @@
+{
+  "flextesanet-alice": {
+    "funderPKH": "tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb",
+    "remoteSignerUrl": "http://signatory:6732",
+    "batchSize": 2,
+    "rpcUrl": "http://flextesa:20000/",
+    "redisListName": "example:flextesanet-alice:address-pool"
+  },
+  "ephemeral-keys-flextesanet-alice": {
+    "funderPKH": "tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb",
+    "remoteSignerUrl": "http://signatory:6732",
+    "targetBuffer": 6,
+    "batchSize": 3,
+    "tzAmount": 2,
+    "autoRefillDurationMS": 30000,
+    "rpcUrl": "http://flextesa:20000/",
+    "redisListName": "ephemeral-keys:flextesanet:address-pool"
+  }
+}

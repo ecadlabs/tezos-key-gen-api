@@ -1,0 +1,7 @@
+{
+  "ephemeral-keys-flextesanet": {
+    "maxAmount": 30,
+    "expire": 300,
+    "pool-id": "ephemeral-keys-flextesanet-alice"
+  }
+}

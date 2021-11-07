@@ -1,0 +1,40 @@
+version: '3'
+services:
+  redis:
+    image: bitnami/redis
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_PASSWORD=password123
+    volumes:
+      - /bitnami/redis/data
+  signatory:
+    image: ecadlabs/signatory:latest
+    ports:
+      - 6732:6732
+    volumes:
+      - ./signatory.yaml:/etc/signatory.yaml
+      - ./key_gen_funder.key:/etc/key_gen_funder.key
+  key-gen:
+    image: ecadlabs/tezos-key-gen-api:flextesa
+    ports:
+      - 3000:3000
+      - 3001:3001
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=password123
+    volumes:
+      - ./pools-config.json:/pools-config.single.json
+      - ./accounts-config.json:/accounts-config.single.json
+      - ./ephemeral-config.json:/ephemeral-config.single.json
+  flextesa:
+    image: tqtezos/flextesa:20210602
+    ports:
+      - 8732:20000
+    command: flobox start
+
+networks:
+  default:
+    external: true
+    name: flextesa
+

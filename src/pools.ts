@@ -12,9 +12,9 @@ const METRIC_COLLECTION_INTERVAL = 10000;
 export class Pools {
   private pools = new Map<string, AddressPool>();
   private ephemeralPools = new Map<string, EphemeralKeyStore>();
-  private accounts: {
-    [key: string]: {
-      [key: string]: {
+  private accounts: { // Read from `accounts-config.json`
+    [key: string]: { // String that key-gen will match `Authorization:` headers against
+      [key: string]: { // Network name, corresponds to entries in the pools property (pools-config.json)
         regular: string,
         ephemeral: string
       }

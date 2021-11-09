@@ -1,7 +1,9 @@
 {
+  "flextesanet-t0k3n": {
     "flextesanet": {
-      "regular": "flextesanet-alice",
-      "ephemeral": "ephemeral-keys-flextesanet-alice"
+      "regular": "flextesanet",
+      "ephemeral": "ephemeral-keys-flextesanet"
     }
+  }
 }
 

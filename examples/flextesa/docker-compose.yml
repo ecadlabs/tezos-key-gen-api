@@ -31,6 +31,8 @@ services:
     image: tqtezos/flextesa:20210602
     ports:
       - 8732:20000
+   #environment:
+   # - TEZOS_LOG='rpc -> INFO'
     command: flobox start
 
 networks:

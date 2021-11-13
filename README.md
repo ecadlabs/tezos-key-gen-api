@@ -1,12 +1,10 @@
+## key-gen 
 
-The Taquito integration-tests rely on a service called [tezos-key-gen-api][tezos-key-gen-api] which allows the integration tests to either fetch secrets for pre-funded accounts or to send operations to the key-gen service for signing with a pre-funded account. This service allows the Taquito integration tests to run in parrallel, and thus allowing the entire test-suite to complete faster.
+The key-gen service will sign or provide secrets for pre-funded Tezos accounts. This service is helpful for testing and development workflows where the user needs to sign operations.
 
-The key-gen service will sign or provide secrets for prefunded Tezos accounts. This service is useful for testing and development workflows where the user needs to sign operations.
+The service requires a main "funder account." Key-gen generates a new pool of accounts in the target chain and funds each from the main funder account. Key-gen will maintain the size of the address pools.
 
-The service requires a main "funder account". Key-gen generates a new pool of accounts in the target chain, and funds each one from the main funder account. Key-gen will maintain the size of the address pools.
-
-This service is used to speed up Taquito's integration tests. The Taquito test suite will fetch a new secret, or request an operation to be signed, for each of its tests. This allows Taquito to run many integration tests in parallel, instead of sequentially, as would be required if run with a single implicit account.
-
+key-gen is used in Taquito's CI/CD integration tests and allows them to run in parallel, making CI/CD jobs finish sooner. The Taquito test suite will fetch a new secret from key-gen or request key-gen to sign an operation. 
 
 ## Configuration files
 

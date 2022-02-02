@@ -83,6 +83,9 @@ const ready = async () => {
 }
 
 ready().then(() => {
+  process.on('uncaughtException', function(err){
+    logger.error(`Uncaught exception: ${err.message}`)   
+  })
   pools.init(client)
   pools.initEphemeral(client, pubSub);
 

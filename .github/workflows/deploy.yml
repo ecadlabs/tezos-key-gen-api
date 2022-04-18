@@ -31,7 +31,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ecadlabs/tezos-key-gen-api
+          images: ghcr.io/ecadlabs/tezos-key-gen-api
           tags: |
             type=ref,event=branch
             type=ref,event=pr,suffix=-{{sha}}

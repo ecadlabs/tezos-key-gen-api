@@ -1,9 +1,7 @@
 import { HttpResponseError } from '@taquito/http-utils'
-import { decoders } from '@taquito/local-forging'
-import { Uint8ArrayConsumer } from '@taquito/local-forging'
+import { LocalForger, ProtocolsHash } from '@taquito/local-forging'
 import { OperationContentsAndResultReveal } from '@taquito/rpc'
 import { InMemorySigner } from '@taquito/signer'
-import { hex2buf } from '@taquito/utils'
 import { Request, Response } from 'express'
 import { OperationContentsAndResultOrigination, OperationContentsAndResultTransaction, OperationObject } from '@taquito/rpc'
 import { pools } from '../pools'
@@ -76,9 +74,9 @@ export const sign = async (req: Request, res: Response) => {
   // If decoded successfully it is an OperationObject compliant json object
   let managerOp: OperationObject;
   try {
-    const consumer = new Uint8ArrayConsumer(hex2buf(bytes))
-    consumer.consume(1)
-    managerOp = decoders['manager'](consumer as any) as OperationObject
+    const protocolHash = (await Tezos.rpc.getProtocols()).next_protocol;
+    const localForger = new LocalForger(protocolHash as ProtocolsHash);
+    managerOp = await localForger.parse(bytes.slice(2));
   } catch (ex) {
     childLogger.debug('Unforge request failed', {request: req.body})
     res.status(400).send();

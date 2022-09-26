@@ -1,20 +1,20 @@
 {
-  "ligo-ide-babylonnet": {
-    "funderPKH": "tz2UBGrEBKzzW6hjXjxxiQFJNg6WR2bm6GEN",
+
+  "taquito-example-kathmandunet": {
+    "funderPKH": "tz1MtFJuM9Hsht9eKW8ikcadaA9GhSP3Ce1J",
     "remoteSignerUrl": "http://localhost:6732",
-    "rpcUrl": "https://api.tez.ie/rpc/babylonnet",
-    "redisListName": "ligo-ide:babylonnet:address-pool"
+    "batchSize": 2,
+    "rpcUrl": "https://kathmandunet.ecadinfra.com/",
+    "redisListName": "taquito-example:kathmandunet:address-pool"
   },
-  "taquito-example-babylonnet": {
-    "funderPKH": "tz2UBGrEBKzzW6hjXjxxiQFJNg6WR2bm6GEN",
+  "ephemeral-keys-kathmandunet": {
+    "funderPKH": "tz1MtFJuM9Hsht9eKW8ikcadaA9GhSP3Ce1J",
     "remoteSignerUrl": "http://localhost:6732",
-    "rpcUrl": "https://api.tez.ie/rpc/babylonnet",
-    "redisListName": "taquito-example:babylonnet:address-pool"
-  },
-  "ephemeral-keys-babylonnet": {
-    "funderPKH": "tz2UBGrEBKzzW6hjXjxxiQFJNg6WR2bm6GEN",
-    "remoteSignerUrl": "http://localhost:6732",
-    "rpcUrl": "https://api.tez.ie/rpc/babylonnet",
-    "redisListName": "ephemeral-keys:babylonnet:address-pool"
+    "targetBuffer": 6,
+    "batchSize": 3,
+    "tzAmount": 2,
+    "autoRefillDurationMS": 30000,
+    "rpcUrl": "https://kathmandunet.ecadinfra.com/",
+    "redisListName": "ephemeral-keys:kathmandunet:address-pool"
   }
 }

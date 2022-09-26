@@ -1,7 +1,7 @@
 {
-  "ephemeral-keys-babylonnet": {
-    "maxAmount": 1,
-    "expire": 3600,
-    "pool-id": "ephemeral-keys-babylonnet"
+  "ephemeral-keys-kathmandunet": {
+    "maxAmount": 30,
+    "expire": 300,
+    "pool-id": "ephemeral-keys-kathmandunet"
   }
 }

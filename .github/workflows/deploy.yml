@@ -31,12 +31,11 @@ jobs:
             ecadlabs/tezos-key-gen-api
             ghcr.io/ecadlabs/tezos-key-gen-api
           tags: |
-            type=ref,event=branch
+            type=ref,event=branch,suffix=-{{sha}}
             type=ref,event=pr,suffix=-{{sha}}
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
-            type=sha
 
       - name: Login to GHCR
         if: github.event_name != 'pull_request'

@@ -1,14 +1,8 @@
 {
-  "ligo-ide": {
-    "babylonnet": {
-      "regular": "ligo-ide-babylonnet",
-      "ephemeral": "ephemeral-keys-babylonnet"
-    }
-  },
   "taquito-example": {
-    "babylonnet": {
-      "regular": "taquito-example-babylonnet",
-      "ephemeral": "ephemeral-keys-babylonnet"
+    "kathmandu": {
+      "regular": "taquito-example-kathmandunet",
+      "ephemeral": "ephemeral-keys-kathmandunet"
     }
   }
 }

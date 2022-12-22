@@ -1,11 +1,9 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
     "module": "commonjs",
     "outDir": "./dist/lib",
     "rootDir": "src",
-    "typeRoots": [
-      "./node_modules/@types"
-    ]
   },
   "include": [
     "./**/*"

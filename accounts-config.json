@@ -1,8 +1,8 @@
 {
   "taquito-example": {
-    "kathmandu": {
-      "regular": "taquito-example-kathmandunet",
-      "ephemeral": "ephemeral-keys-kathmandunet"
+    "ghostnet": {
+      "regular": "taquito-example-ghostnet",
+      "ephemeral": "ephemeral-keys-ghostnet"
     }
   }
 }

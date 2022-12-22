@@ -1,7 +1,7 @@
 {
-  "ephemeral-keys-kathmandunet": {
+  "ephemeral-keys-ghostnet": {
     "maxAmount": 30,
     "expire": 300,
-    "pool-id": "ephemeral-keys-kathmandunet"
+    "pool-id": "ephemeral-keys-ghostnet"
   }
 }

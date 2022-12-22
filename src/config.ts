@@ -32,7 +32,7 @@ export class Config {
   batchSize = Number(process.env['BATCH_SIZE'] || 20);
   tzAmount = Number(process.env['FUNDING_AMOUNT'] || 10);
   autoRefillDurationMS = Number(process.env['AUTO_REFILL_DURATION_MS'] || 0);
-  rpcUrl = process.env['RPC_URL'] || 'https://api.tez.ie/rpc/babylonnet'
+  rpcUrl = process.env['RPC_URL'] || 'https://ghostnet.ecadinfra.com'
   lastJobKey = process.env['LAST_JOB_KEY'] || 'last_job_level'
   listName = process.env['SECRET_KEY_LIST_NAME'] || 'secret_keys_list'
   redisPassword = process.env['REDIS_PASSWORD'] || 'password123'

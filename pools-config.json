@@ -1,20 +1,20 @@
 {
 
-  "taquito-example-kathmandunet": {
+  "taquito-example-ghostnet": {
     "funderPKH": "tz1MtFJuM9Hsht9eKW8ikcadaA9GhSP3Ce1J",
     "remoteSignerUrl": "http://localhost:6732",
     "batchSize": 2,
-    "rpcUrl": "https://kathmandunet.ecadinfra.com/",
-    "redisListName": "taquito-example:kathmandunet:address-pool"
+    "rpcUrl": "https://ghostnet.ecadinfra.com/",
+    "redisListName": "taquito-example:ghostnet:address-pool"
   },
-  "ephemeral-keys-kathmandunet": {
+  "ephemeral-keys-ghostnet": {
     "funderPKH": "tz1MtFJuM9Hsht9eKW8ikcadaA9GhSP3Ce1J",
     "remoteSignerUrl": "http://localhost:6732",
     "targetBuffer": 6,
     "batchSize": 3,
     "tzAmount": 2,
     "autoRefillDurationMS": 30000,
-    "rpcUrl": "https://kathmandunet.ecadinfra.com/",
-    "redisListName": "ephemeral-keys:kathmandunet:address-pool"
+    "rpcUrl": "https://ghostnet.ecadinfra.com/",
+    "redisListName": "ephemeral-keys:ghostnet:address-pool"
   }
 }

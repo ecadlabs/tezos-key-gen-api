@@ -1,20 +1,82 @@
 {
-
+  "ligo-ide-ghostnet": {
+    "funderPKH": "tz1bRt6Lo9KRNEUF9voCwkjR2pkMU9xJuYMB",
+    "remoteSignerUrl": "http://signatory:6732",
+    "batchSize": 100,
+    "rpcUrl": "http://ecad-ghostnet-rolling.i.tez.ie:8732",
+    "redisListName": "ligo-ide:ghostnet:address-pool"
+  },
+  "ligo-ide-mumbainet": {
+    "funderPKH": "tz1bRt6Lo9KRNEUF9voCwkjR2pkMU9xJuYMB",
+    "remoteSignerUrl": "http://signatory:6732",
+    "batchSize": 100,
+    "rpcUrl": "http://ecad-mumbainet-full.i.tez.ie:8732",
+    "redisListName": "ligo-ide:mumbainet:address-pool"
+  },
+  "ligo-ide-nairobinet": {
+    "funderPKH": "tz1bRt6Lo9KRNEUF9voCwkjR2pkMU9xJuYMB",
+    "remoteSignerUrl": "http://signatory:6732",
+    "batchSize": 100,
+    "rpcUrl": "http://ecad-nairobinet-full.i.tez.ie:8732",
+    "redisListName": "ligo-ide:nairobinet:address-pool"
+  },
   "taquito-example-ghostnet": {
-    "funderPKH": "tz1MtFJuM9Hsht9eKW8ikcadaA9GhSP3Ce1J",
-    "remoteSignerUrl": "http://localhost:6732",
-    "batchSize": 2,
-    "rpcUrl": "https://ghostnet.ecadinfra.com/",
+    "funderPKH": "tz1bRt6Lo9KRNEUF9voCwkjR2pkMU9xJuYMB",
+    "remoteSignerUrl": "http://signatory:6732",
+    "batchSize": 100,
+    "rpcUrl": "http://ecad-ghostnet-rolling.i.tez.ie:8732",
     "redisListName": "taquito-example:ghostnet:address-pool"
   },
+  "taquito-example-mumbainet": {
+    "funderPKH": "tz1bRt6Lo9KRNEUF9voCwkjR2pkMU9xJuYMB",
+    "remoteSignerUrl": "http://signatory:6732",
+    "batchSize": 100,
+    "rpcUrl": "http://ecad-mumbainet-full.i.tez.ie:8732",
+    "redisListName": "taquito-example:mumbainet:address-pool"
+  },
+  "taquito-example-nairobinet": {
+    "funderPKH": "tz1bRt6Lo9KRNEUF9voCwkjR2pkMU9xJuYMB",
+    "remoteSignerUrl": "http://signatory:6732",
+    "batchSize": 100,
+    "rpcUrl": "http://ecad-nairobinet-full.i.tez.ie:8732",
+    "redisListName": "taquito-example:nairobinet:address-pool"
+  },
+  "taqueria-ghostnet": {
+    "funderPKH": "tz1bRt6Lo9KRNEUF9voCwkjR2pkMU9xJuYMB",
+    "remoteSignerUrl": "http://signatory:6732",
+    "batchSize": 50,
+    "rpcUrl": "http://ecad-ghostnet-rolling.i.tez.ie:8732",
+    "redisListName": "taqueria:ghostnet:address-pool"
+  },
   "ephemeral-keys-ghostnet": {
-    "funderPKH": "tz1MtFJuM9Hsht9eKW8ikcadaA9GhSP3Ce1J",
-    "remoteSignerUrl": "http://localhost:6732",
-    "targetBuffer": 6,
-    "batchSize": 3,
-    "tzAmount": 2,
+    "funderPKH": "tz1bRt6Lo9KRNEUF9voCwkjR2pkMU9xJuYMB",
+    "remoteSignerUrl": "http://signatory:6732",
+    "targetBuffer": 100,
+    "batchSize": 100,
+    "tzAmount": 10,
     "autoRefillDurationMS": 30000,
-    "rpcUrl": "https://ghostnet.ecadinfra.com/",
+    "rpcUrl": "http://ecad-ghostnet-rolling.i.tez.ie:8732",
     "redisListName": "ephemeral-keys:ghostnet:address-pool"
+  },
+  "ephemeral-keys-mumbainet": {
+    "funderPKH": "tz1bRt6Lo9KRNEUF9voCwkjR2pkMU9xJuYMB",
+    "remoteSignerUrl": "http://signatory:6732",
+    "targetBuffer": 100,
+    "batchSize": 100,
+    "tzAmount": 10,
+    "autoRefillDurationMS": 30000,
+    "rpcUrl": "http://ecad-mumbainet-full.i.tez.ie:8732",
+    "redisListName": "ephemeral-keys:mumbainet:address-pool"
+  },
+  "ephemeral-keys-nairobinet": {
+    "funderPKH": "tz1bRt6Lo9KRNEUF9voCwkjR2pkMU9xJuYMB",
+    "remoteSignerUrl": "http://signatory:6732",
+    "targetBuffer": 100,
+    "batchSize": 100,
+    "tzAmount": 10,
+    "autoRefillDurationMS": 30000,
+    "rpcUrl": "http://ecad-nairobinet-full.i.tez.ie:8732",
+    "redisListName": "ephemeral-keys:nairobinet:address-pool"
   }
+
 }

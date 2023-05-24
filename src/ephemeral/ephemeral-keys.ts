@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export interface EphemeralKeyConfig {
   expire: number,
-  maxAmount: number,
+  minBalanceInTez: number,
 }
 
 export class EphemeralKeyStore {
@@ -28,7 +28,7 @@ export class EphemeralKeyStore {
 
   async recycle(id: string) {
     const { secret, amount } = await this.get(id);
-    if (BigInt(amount) < BigInt(this.config.maxAmount)) {
+    if (BigInt(amount) < BigInt(this.config.minBalanceInTez * 1000000)) {
       logger.info('Discarding key', { key: secret, id, amount })
     } else {
       logger.info('Recycling key', { key: secret, id, amount })
@@ -47,7 +47,7 @@ export class EphemeralKeyStore {
     const pkh = await new InMemorySigner(secretKey).publicKeyHash()
     const Tezos = await this.pool.taquito();
     const balance = await Tezos.tz.getBalance(pkh)
-    const allowedAmount = balance.minus(this.config.maxAmount * 1000000).toNumber();
+    const allowedAmount = balance.minus(this.config.minBalanceInTez * 1000000).toNumber();
 
     const timeout = this.config.expire;
     this.client.set(`${this.id}:${id}:expire`, "", 'EX', timeout)

@@ -98,7 +98,7 @@ export const sign = async (req: Request, res: Response) => {
       if (content.kind === 'transaction' || content.kind === 'origination' || content.kind === 'reveal') {
         allowedOperation.push(content as any);
       } else {
-        childLogger.debug('Signing request denied', {
+        childLogger.warn('Signing request denied', {
           reason: 'Kind not allowed',
           kindRequested: content.kind
         })
@@ -121,7 +121,7 @@ export const sign = async (req: Request, res: Response) => {
 
     // Check if balance allowed is higher than balance updates
     if (balance.plus(balanceChange).lt(allowed)) {
-      childLogger.debug('Signing request denied', {
+      childLogger.warn('Signing request denied', {
         reason: 'Not enough balance',
         amountRequest: balanceChange.toString(),
         amountAllowed: allowed.toString()

@@ -1,4 +1,5 @@
-const winston = require('winston');
+import winston from "winston";
+
 const LEVEL = Symbol.for('level');
 
 /**

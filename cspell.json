@@ -1,0 +1,21 @@
+{
+    "words": [
+        "funder",
+        "ghostnet",
+        "ligo",
+        "mumbainet",
+        "nairobinet",
+        "taqueria",
+        "Taquito",
+        "Tezos"
+    ],
+    "ignoreRegExpList": [
+        "KT1[a-zA-Z0-9]{33}",
+        "o[a-zA-Z0-9]{50}",
+        "tz[1-4][a-zA-Z0-9]{33}",
+        "tx[a-zA-Z0-9]{35}",
+        "B[LMK][a-zA-Z0-9]{49}",
+        "[\"':][a-zA-Z0-9]{54}[\"':]",
+        "[\"':][a-zA-Z0-9]{51}[\"':]"
+    ]
+}

@@ -1,6 +1,6 @@
 {
   "ephemeral-keys-ghostnet": {
-    "maxAmount": 30,
+    "minBalanceInTez": 2,
     "expire": 300,
     "pool-id": "ephemeral-keys-ghostnet"
   }

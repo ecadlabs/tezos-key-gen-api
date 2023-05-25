@@ -22,6 +22,10 @@ export class EphemeralKeyStore {
     }
   }
 
+  public getMinBalance() {
+    return this.config.minBalanceInTez;
+  }
+
   public getRPC() {
     return this.pool.getRPC();
   }

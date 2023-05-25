@@ -52,12 +52,12 @@ export const sign = async (req: Request, res: Response) => {
 
   const id = req.params.id;
 
-  const { secret, amount } = await ephemeralPool.get(id);
+  const { secret } = await ephemeralPool.get(id);
+  const minBalance = ephemeralPool.getMinBalance();
 
   const signer = new InMemorySigner(secret);
 
   const key = await signer.publicKeyHash();
-  const allowed = Number(amount);
   const balance = await Tezos.tz.getBalance(key)
   const bytes = JSON.parse(req.body);
 
@@ -120,11 +120,11 @@ export const sign = async (req: Request, res: Response) => {
 
 
     // Check if balance allowed is higher than balance updates
-    if (balance.plus(balanceChange).lt(allowed)) {
+    if (balance.plus(balanceChange).lt(100000)) {
       childLogger.warn('Signing request denied', {
         reason: 'Not enough balance',
         amountRequest: balanceChange.toString(),
-        amountAllowed: allowed.toString()
+        currentBalance: balance,
       })
       res.status(403).send('Not enough balance');
       return

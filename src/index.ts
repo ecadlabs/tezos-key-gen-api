@@ -49,7 +49,9 @@ app.use(promMid({
   metricsPath: '/metrics',
   collectDefaultMetrics: true,
   requestDurationBuckets: [0.1, 0.5, 1, 1.5],
-  metricsApp: metrics
+  extraMasks: [
+    'tz2(.*){33}$'
+  ]
 }))
 app.post('/:network', middlewareLogger((req: any, res: any) => popKeys(req, res)))
 app.get('/:network', middlewareLogger((req: any, res: any) => count(req, res)))

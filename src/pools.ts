@@ -1,7 +1,7 @@
 import { AddressPool } from "./address-pool";
 import { RedisClient } from "redis";
 import { readFileSync } from 'fs';
-import { config } from "./config";
+import { environmentConfig } from "./config";
 import { getKeyPoolSizeGauge } from "./metrics/key_pool_size.gauge";
 import { getFundingAccountGauge } from "./metrics/funding_account_balance.gauge";
 import { EphemeralKeyStore } from "./ephemeral/ephemeral-keys";
@@ -24,13 +24,12 @@ export class Pools {
   init(redis: RedisClient) {
     const content = JSON.parse(readFileSync("pools-config.json").toString('utf8'))
     Object.keys(content).forEach((poolKey) => {
-      const pool = new AddressPool(poolKey, {
-        ...config,
+      const config = {
+        ...environmentConfig,
         // TODO validate schema
         ...content[poolKey]
-      },
-        redis
-      )
+      };
+      const pool = new AddressPool(poolKey, config, redis);
       pool.init();
       this.pools.set(poolKey, pool)
 

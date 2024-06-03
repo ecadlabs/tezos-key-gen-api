@@ -23,7 +23,7 @@ let faucetKey = {
   "email": "kntjngde.xxrexlbx@tezos.example.org"
 }
 
-export class Config {
+export class EnvironmentConfig {
   faucetKey() {
     return faucetKey;
   }
@@ -42,4 +42,4 @@ export class Config {
 }
 
 
-export const config = new Config();
+export const environmentConfig = new EnvironmentConfig();

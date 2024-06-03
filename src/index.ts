@@ -1,5 +1,5 @@
 import { RedisClient } from "redis";
-import { config } from "./config";
+import { EnvironmentConfig, environmentConfig } from "./config";
 import { count, popKeys } from "./handlers/keys";
 import { logger } from "./logger";
 import { pools } from "./pools";
@@ -58,15 +58,15 @@ app.get('/:network/ephemeral/:id/keys/:key', middlewareLogger((req: any, res: an
 app.post('/:network/ephemeral/:id/keys/:key', middlewareLogger((req: any, res: any) => sign(req, res))) 
 
 export const client: RedisClient = redis.createClient({
-  host: config.redisHost,
-  port: config.redisPort,
-  password: config.redisPassword
+  host: environmentConfig.redisHost,
+  port: environmentConfig.redisPort,
+  password: environmentConfig.redisPassword
 });
 
 export const pubSub: RedisClient = redis.createClient({
-  host: config.redisHost,
-  port: config.redisPort,
-  password: config.redisPassword
+  host: environmentConfig.redisHost,
+  port: environmentConfig.redisPort,
+  password: environmentConfig.redisPassword
 });
 
 const ready = async () => {

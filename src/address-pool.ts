@@ -2,7 +2,6 @@ import { InMemorySigner } from '@taquito/signer';
 import { TezosToolkit } from '@taquito/taquito';
 import { b58cencode, prefix, Prefix } from '@taquito/utils';
 import { logger } from './logger';
-import { keyValue } from './storage/key-value';
 import { RedisQueue } from "./storage/redis-queue";
 import { RedisClient } from 'redis';
 import { RemoteSigner } from '@taquito/remote-signer';
@@ -10,6 +9,7 @@ import { getKeyProducedCounter } from './metrics/keys-produced.counter';
 import { getKeyIssuedCounter } from './metrics/keys-issued.counter';
 
 const crypto = require('crypto');
+let lastJobLevel = -1;
 
 export interface PoolConfig {
   redisListName: string;
@@ -23,6 +23,10 @@ export interface PoolConfig {
   autoRefillDurationMS: number;
 }
 
+/* A pool of addresses maintained in a Redis list. If the config has autoRefillDurationMS,
+  then this address pool will automatically refill itself with new addresses. Otherwise, it will
+  only refill after after an address is popped.
+*/
 export class AddressPool {
 
   queue: RedisQueue;
@@ -83,9 +87,9 @@ export class AddressPool {
       const Tezos = await this.taquito()
       const { level } = await Tezos.rpc.getBlockHeader()
 
-      if (await this.queue.size() < this.config.targetBuffer && (!keyValue.has(this.config.lastJobKey) || keyValue.get(this.config.lastJobKey) < level)) {
+      if (await this.queue.size() < this.config.targetBuffer && lastJobLevel < level) {
         this.logger.info('Generating new keys...', { level })
-        keyValue.put(this.config.lastJobKey, level);
+        lastJobLevel = level;
         const dests: { key: string, pkh: string }[] = [];
 
         for (let i = 0; i < this.config.batchSize; i++) {

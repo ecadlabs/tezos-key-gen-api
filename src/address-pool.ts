@@ -4,7 +4,7 @@ import { b58cencode, prefix, Prefix } from '@taquito/utils';
 import { logger } from './logger';
 import { keyValue } from './storage/key-value';
 import { RedisQueue } from "./storage/redis-queue";
-import { RedisClient } from 'redis';
+import { RedisClientType } from 'redis';
 import { RemoteSigner } from '@taquito/remote-signer';
 import { getKeyProducedCounter } from './metrics/keys-produced.counter';
 import { getKeyIssuedCounter } from './metrics/keys-issued.counter';
@@ -31,7 +31,7 @@ export class AddressPool {
   constructor(
     public readonly id: string,
     private config: PoolConfig,
-    client: RedisClient
+    client: RedisClientType
   ) {
     this.logger = logger.child({ pool: id })
     this.queue = new RedisQueue(client, config.redisListName);
@@ -113,7 +113,8 @@ export class AddressPool {
         this.logger.info('New batch generated', { keys: dests, opHash: op.hash })
       }
     } catch (ex) {
-      this.logger.error(ex.message);
+      const errorMessage = ex instanceof Error ? ex.message : 'Unknown error';
+      this.logger.error(errorMessage);
     }
   }
 }

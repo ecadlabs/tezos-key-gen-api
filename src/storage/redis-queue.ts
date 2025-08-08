@@ -1,39 +1,22 @@
-import { RedisClient } from 'redis';
+import { RedisClientType } from 'redis';
 
 export class RedisQueue {
 
-  constructor(private client: RedisClient, private listName: string) { }
+  constructor(private client: RedisClientType, private listName: string) { }
 
   async pop() {
-    return new Promise<string | undefined>(async (resolve, reject) => {
-      if (!await this.size()) {
-        resolve(undefined);
-        return;
-      }
-      this.client.lpop(this.listName, (err: any, data: any) => {
-        if (err) {
-          reject(err);
-          return
-        }
-
-        resolve(data);
-      })
-    })
+    const size = await this.size();
+    if (!size) {
+      return undefined;
+    }
+    return await this.client.lPop(this.listName);
   }
 
   async push(key: string) {
-    this.client.rpush(this.listName, key);
+    await this.client.rPush(this.listName, key);
   }
 
   async size() {
-    return new Promise<number>((resolve, reject) => {
-      return this.client.llen(this.listName, (err: any, data: any) => {
-        if (err) {
-          reject(err);
-          return
-        }
-        resolve(data);
-      })
-    })
+    return await this.client.lLen(this.listName);
   }
 }

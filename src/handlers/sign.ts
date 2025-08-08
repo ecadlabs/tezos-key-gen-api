@@ -28,6 +28,11 @@ export const pk = async (req: Request, res: Response) => {
 
   const { secret } = await ephemeralPool.get(id);
 
+  if (!secret) {
+    res.status(404).send('Key not found or expired');
+    return;
+  }
+
   const signer = new InMemorySigner(secret);
 
   res.status(200).send({ public_key: await signer.publicKey() })
@@ -53,6 +58,11 @@ export const sign = async (req: Request, res: Response) => {
   const id = req.params.id;
 
   const { secret, amount } = await ephemeralPool.get(id);
+
+  if (!secret || !amount) {
+    res.status(404).send('Key not found or expired');
+    return;
+  }
 
   const signer = new InMemorySigner(secret);
 
@@ -111,9 +121,9 @@ export const sign = async (req: Request, res: Response) => {
     const balanceChange = allowedOperation.reduce((prev, op) => {
       const opResultBU = (op.metadata.operation_result as any)['balance_updates']
 
-      return prev + op.metadata.balance_updates.reduce((prevSum, update) => {
+      return prev + (op.metadata.balance_updates?.reduce((prevSum, update) => {
         return update.contract === key ? prevSum + Number.parseInt(update.change, 10) : prevSum
-      }, 0) + (Array.isArray(opResultBU) ? opResultBU.reduce((prevSum, update) => {
+      }, 0) || 0) + (Array.isArray(opResultBU) ? opResultBU.reduce((prevSum, update) => {
         return update.contract === key ? prevSum + Number.parseInt(update.change, 10) : prevSum
       }, 0) : 0)
     }, 0)
@@ -136,8 +146,9 @@ export const sign = async (req: Request, res: Response) => {
     const { prefixSig } = await signer.sign(bytes)
     res.status(200).send({ signature: prefixSig });
   } catch (ex) {
-    childLogger.debug(ex.message, { operation: managerOp });
-    childLogger.error(ex.message);
+    const errorMessage = ex instanceof Error ? ex.message : 'Unknown error';
+    childLogger.debug(errorMessage, { operation: managerOp });
+    childLogger.error(errorMessage);
     if (ex instanceof HttpResponseError) {
       res.status(ex.status).send(ex.body);
       return

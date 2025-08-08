@@ -37,7 +37,7 @@ export class Config {
   listName = process.env['SECRET_KEY_LIST_NAME'] || 'secret_keys_list'
   redisPassword = process.env['REDIS_PASSWORD'] || 'password123'
   redisHost = process.env['REDIS_HOST'] || 'localhost'
-  redisPort = process.env['REDIS_PASSWORD'] || '6379'
+  redisPort = Number(process.env['REDIS_PORT'] || '6379')
   apiKeys = ['ligo-ide', 'taquito-example']
 }
 

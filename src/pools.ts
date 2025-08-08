@@ -1,5 +1,5 @@
 import { AddressPool } from "./address-pool";
-import { RedisClient } from "redis";
+import { RedisClientType } from "redis";
 import { readFileSync } from 'fs';
 import { config } from "./config";
 import { getKeyPoolSizeGauge } from "./metrics/key_pool_size.gauge";
@@ -21,7 +21,7 @@ export class Pools {
     }
   } = {};
 
-  init(redis: RedisClient) {
+  init(redis: RedisClientType) {
     const content = JSON.parse(readFileSync("pools-config.json").toString('utf8'))
     Object.keys(content).forEach((poolKey) => {
       const pool = new AddressPool(poolKey, {
@@ -42,21 +42,23 @@ export class Pools {
     this.accounts = JSON.parse(readFileSync("accounts-config.json").toString('utf8'))
   }
 
-  public initEphemeral(client: RedisClient, pubSub: RedisClient) {
-    pubSub.on("message", async (_channel, message) => {
+  public async initEphemeral(client: RedisClientType, pubSub: RedisClientType) {
+    await pubSub.subscribe("__keyevent@0__:expired", (message) => {
       const match = /^(.+):(.+):expire$/.exec(message);
       if (Array.isArray(match) && match.length === 3) {
         setTimeout(async () => {
           try {
             const pool = this.ephemeralPools.get(match[1]);
-            await pool.recycle(match[2])
+            if (pool) {
+              await pool.recycle(match[2])
+            }
           } catch (ex) {
-            logger.error(`Unable to recycle key, it will be discarded: ${ex.message}`, { ephemeralPool: match[1], key: match[2] })
+            const errorMessage = ex instanceof Error ? ex.message : 'Unknown error';
+            logger.error(`Unable to recycle key, it will be discarded: ${errorMessage}`, { ephemeralPool: match[1], key: match[2] })
           }
         })
       }
     });
-    pubSub.subscribe("__keyevent@0__:expired");
     const content = JSON.parse(readFileSync("ephemeral-config.json").toString('utf8'))
 
     Object.keys(content).forEach((ephemeralPoolKey) => {

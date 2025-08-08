@@ -1,4 +1,4 @@
-import { RedisClient } from "redis";
+import { RedisClientType } from "redis";
 import { AddressPool } from "../address-pool";
 import { InMemorySigner } from "@taquito/signer";
 import { logger } from "../logger";
@@ -13,7 +13,7 @@ export interface EphemeralKeyConfig {
 export class EphemeralKeyStore {
   constructor(
     public readonly id: string,
-    private client: RedisClient,
+    private client: RedisClientType,
     private config: EphemeralKeyConfig,
     public readonly pool: AddressPool
   ) {
@@ -28,6 +28,10 @@ export class EphemeralKeyStore {
 
   async recycle(id: string) {
     const { secret, amount } = await this.get(id);
+    if (!secret || !amount) {
+      logger.info('Key not found or expired', { id });
+      return;
+    }
     if (BigInt(amount) < BigInt(this.config.maxAmount)) {
       logger.info('Discarding key', { key: secret, id, amount })
     } else {
@@ -50,33 +54,18 @@ export class EphemeralKeyStore {
     const allowedAmount = balance.minus(this.config.maxAmount * 1000000).toNumber();
 
     const timeout = this.config.expire;
-    this.client.set(`${this.id}:${id}:expire`, "", 'EX', timeout)
-    this.client.set(`${this.id}:${id}:secret`, secretKey, 'EX', timeout * 2)
-    this.client.set(`${this.id}:${id}:amount`, String(allowedAmount), 'EX', timeout * 2);
+    await this.client.setEx(`${this.id}:${id}:expire`, timeout, "")
+    await this.client.setEx(`${this.id}:${id}:secret`, timeout * 2, secretKey)
+    await this.client.setEx(`${this.id}:${id}:amount`, timeout * 2, String(allowedAmount));
     return { id, pkh };
   }
 
-  get(id: string) {
-    return new Promise<{ secret: string, amount: string }>((resolve, reject) => {
-      this.client.mget(`${this.id}:${id}:secret`, `${this.id}:${id}:amount`, (err, [secret, amount]) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve({ secret, amount })
-        }
-      })
-    })
+  async get(id: string) {
+    const [secret, amount] = await this.client.mGet([`${this.id}:${id}:secret`, `${this.id}:${id}:amount`]);
+    return { secret, amount };
   }
 
-  decr(id: string, amount: number) {
-    return new Promise<void>((resolve, reject) => {
-      this.client.decrby(`${this.id}:${id}:amount`, amount, (err) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve()
-        }
-      });
-    })
+  async decr(id: string, amount: number) {
+    await this.client.decrBy(`${this.id}:${id}:amount`, amount);
   }
 }

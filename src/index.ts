@@ -1,4 +1,4 @@
-import { RedisClient } from "redis";
+import { createClient, RedisClientType } from "redis";
 import { config } from "./config";
 import { count, popKeys } from "./handlers/keys";
 import { logger } from "./logger";
@@ -7,7 +7,6 @@ import { provisionEphemeralKey, pk, sign } from "./handlers/sign";
 const promMid = require('express-prometheus-middleware');
 
 const express = require('express')
-const redis = require("redis");
 
 const promClient = require('prom-client');
 const collectDefaultMetrics = promClient.collectDefaultMetrics;
@@ -57,37 +56,34 @@ app.post('/:network/ephemeral', middlewareLogger((req: any, res: any) => provisi
 app.get('/:network/ephemeral/:id/keys/:key', middlewareLogger((req: any, res: any) => pk(req, res)))
 app.post('/:network/ephemeral/:id/keys/:key', middlewareLogger((req: any, res: any) => sign(req, res))) 
 
-export const client: RedisClient = redis.createClient({
-  host: config.redisHost,
-  port: config.redisPort,
+export const client: RedisClientType = createClient({
+  socket: {
+    host: config.redisHost,
+    port: config.redisPort,
+  },
   password: config.redisPassword
 });
 
-export const pubSub: RedisClient = redis.createClient({
-  host: config.redisHost,
-  port: config.redisPort,
+export const pubSub: RedisClientType = createClient({
+  socket: {
+    host: config.redisHost,
+    port: config.redisPort,
+  },
   password: config.redisPassword
 });
 
 const ready = async () => {
-  return new Promise<void>((resolve, reject) => {
-    client.on('ready', (err: any) => {
-      if (err) {
-        reject(err)
-      } else {
-        client.config("SET", "notify-keyspace-events", "Ex");
-        resolve();
-      }
-    })
-  })
+  await client.connect();
+  await pubSub.connect();
+  await client.configSet("notify-keyspace-events", "Ex");
 }
 
-ready().then(() => {
+ready().then(async () => {
   process.on('uncaughtException', function(err){
     logger.error(`Uncaught exception: ${err.message}`)   
   })
   pools.init(client)
-  pools.initEphemeral(client, pubSub);
+  await pools.initEphemeral(client, pubSub);
 
   app.listen(3000, function () {
     logger.info('API listening on port 3000!')

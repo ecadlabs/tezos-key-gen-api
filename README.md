@@ -1,5 +1,9 @@
 # Tezos Key Generation API
 
+> ⚠️ **Documentation Status: Work in Progress** ⚠️
+> 
+> This documentation is currently being developed and may not be complete. Some sections may contain placeholder information or require additional details. We're actively working to improve and expand these docs. If you find any issues or have suggestions, please open an issue or contribute to the documentation.
+
 A high-performance, Redis-backed API service for generating and managing Tezos cryptographic keys for integration testing and development environments.
 
 ## What It Does

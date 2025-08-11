@@ -19,19 +19,27 @@ The Tezos Key Generation API provides:
 
 ## Architecture
 
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   API Client    │    │  Key Generation │    │   Redis Store   │
-│                 │◄──►│      Service    │◄──►│                 │
-│  (HTTP/REST)    │    │                 │    │  (Key Pools)    │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         │                       │                       │
-         ▼                       ▼                       ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│  Tezos RPC      │    │  Remote Signer  │    │  Metrics &      │
-│  (Network)      │    │  (Signatory)    │    │  Monitoring     │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
+```mermaid
+graph TB
+    A[API Client<br/>HTTP/REST] --> B[Key Generation Service]
+    B --> C[Redis Store<br/>Key Pools]
+    
+    B --> D[Tezos RPC<br/>Network]
+    B --> E[Remote Signer<br/>Signatory]
+    B --> F[Metrics & Monitoring]
+    
+    A -.->|HTTP Requests| B
+    B -.->|Store/Retrieve Keys| C
+    B -.->|Network Operations| D
+    B -.->|Sign Transactions| E
+    B -.->|Collect Metrics| F
+    
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f1f8e9
 ```
 
 ## Quick Start

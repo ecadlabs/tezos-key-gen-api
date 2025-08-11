@@ -58,7 +58,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/ecadlabs/tezos-key-gen-api:pr-{{ github.event.number }}-{{ github.sha }}
+          tags: ghcr.io/ecadlabs/tezos-key-gen-api:pr-${{ github.event.number }}-${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push (main/tags)

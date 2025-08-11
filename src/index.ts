@@ -60,6 +60,15 @@ export const client: RedisClientType = createClient({
   socket: {
     host: config.redisHost,
     port: config.redisPort,
+    connectTimeout: 30000,
+    reconnectStrategy: (retries) => {
+      logger.info('Redis client reconnecting', { retries });
+      if (retries > 10) {
+        logger.error('Redis client max retries exceeded');
+        return new Error('Max retries exceeded');
+      }
+      return Math.min(retries * 1000, 3000);
+    }
   },
   password: config.redisPassword
 });
@@ -68,14 +77,44 @@ export const pubSub: RedisClientType = createClient({
   socket: {
     host: config.redisHost,
     port: config.redisPort,
+    connectTimeout: 30000,
+    reconnectStrategy: (retries) => {
+      logger.info('Redis pubSub reconnecting', { retries });
+      if (retries > 10) {
+        logger.error('Redis pubSub max retries exceeded');
+        return new Error('Max retries exceeded');
+      }
+      return Math.min(retries * 1000, 3000);
+    }
   },
   password: config.redisPassword
 });
 
 const ready = async () => {
-  await client.connect();
-  await pubSub.connect();
-  await client.configSet("notify-keyspace-events", "Ex");
+  logger.info('Connecting to Redis...');
+  
+  // Add connection event handlers
+  client.on('connect', () => logger.info('Redis client connected'));
+  client.on('ready', () => logger.info('Redis client ready'));
+  client.on('error', (err) => logger.error('Redis client error', { error: err.message }));
+  client.on('end', () => logger.warn('Redis client connection ended'));
+  client.on('reconnecting', () => logger.info('Redis client reconnecting'));
+  
+  pubSub.on('connect', () => logger.info('Redis pubSub connected'));
+  pubSub.on('ready', () => logger.info('Redis pubSub ready'));
+  pubSub.on('error', (err) => logger.error('Redis pubSub error', { error: err.message }));
+  pubSub.on('end', () => logger.warn('Redis pubSub connection ended'));
+  pubSub.on('reconnecting', () => logger.info('Redis pubSub reconnecting'));
+  
+  try {
+    await client.connect();
+    await pubSub.connect();
+    await client.configSet("notify-keyspace-events", "Ex");
+    logger.info('Redis setup completed successfully');
+  } catch (error) {
+    logger.error('Failed to setup Redis', { error: error instanceof Error ? error.message : 'Unknown error' });
+    throw error;
+  }
 }
 
 ready().then(async () => {

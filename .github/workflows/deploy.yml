@@ -38,7 +38,6 @@ jobs:
             type=semver,pattern={{major}}
 
       - name: Login to GHCR
-        if: github.event_name != 'pull_request'
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -52,11 +51,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push (PR builds)
+        if: github.event_name == 'pull_request'
         uses: docker/build-push-action@v3
         with:
           context: .
           platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
+          tags: ghcr.io/ecadlabs/tezos-key-gen-api:pr-{{ github.event.number }}-{{ github.sha }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build and push (main/tags)
+        if: github.event_name != 'pull_request'
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
